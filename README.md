@@ -1,58 +1,25 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 東海大學通識選課系統 (Course Selection Recommendation System)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📖 專案簡介
+本專案為解決大學生選課痛點所開發之智慧推薦系統。透過整合使用者的 CPAS 職業適性診斷測驗結果，運用自定義雙軌演算法分析核心職能的強弱項，並自動推薦最合適的通識課程，協助學生實現適性發展與弱項補強的教育目標。
 
-## About Laravel
+## 🚀 系統架構與核心技術 (Tech Stack)
+本系統採用前後端分離與微服務架構設計，確保系統的高可用性與可擴展性：
+*   **後端框架 (Laravel 11 / PHP)：** 採用 MVC 架構，負責核心商業邏輯、路由分發、中介層 (Middleware) 權限控管與表單驗證。
+*   **微服務運算 (FastAPI / Python)：** 獨立運作於 `python_api` 模組，將高耗能的 PDF 檔案解析、OCR 辨識與矩陣內積推薦演算法與主伺服器解耦。
+*   **前端渲染 (Vue.js + Vite)：** 透過 `vite.config.ts` 進行模組化建置，處理非同步表單請求 (JSON/FormData) 與動態互動介面。
+*   **資料庫 (MySQL)：** 遵循 3NF 正規化設計，應用 Transaction 與底層鎖定 (Locking) 機制，確保高併發選課情境下的資料一致性，防範資源超賣。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📂 核心目錄結構 (Directory Structure)
+本儲存庫的程式碼結構規劃如下：
+*   `app/Http/Controllers/`：存放 Laravel 核心邏輯，如處理 PDF 上傳與呼叫演算法的 `CpasResultController.php`。
+*   `python_api/`：存放 FastAPI 應用程式、PDF 解析模組與強/弱關係推薦演算法腳本 (`strong.py`, `weak.py`)。
+*   `database/`：包含資料庫遷移檔 (Migrations) 與資料填充 (Seeders)，實現資料庫版本控制。
+*   `resources/` & `public/`：存放 Vue 視圖組件與編譯後的靜態前端資源。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🛠️ 本地端快速啟動 (Quick Start)
+為提升協同開發效率，本專案已封裝自動化啟動腳本。
+1. 安裝 PHP 與 Node.js 依賴套件：
+   ```bash
+   composer install
+   npm install
